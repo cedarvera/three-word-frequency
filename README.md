@@ -5,6 +5,8 @@ Executable from the command line when given text(s) will return the top 100 most
 
 For example, if the code is run on War And Peace (https://gutenburg.org/cache/epub/2600/pg2600.txt), the first lines of the result would (probably) be:
 
+| Sequence | Frequency |
+| -------- | --------- |
 | he did not | 225 |
 | one of the | 187 |
 | out of the | 178 |
