@@ -12,7 +12,8 @@
 //   - It can read text from stdin
 //   - It do both simultaneously
 int main(int _argc, char* _argv[]) {
-  // Let's read in the dictionary for the tracker
+  // Let's read in the dictionary for the tracker to help determine
+  // if a hyphen is a punctuation or a continuation.
   std::set<std::string> dictWords;
   std::ifstream words;
   words.open("dict/words");
@@ -23,7 +24,8 @@ int main(int _argc, char* _argv[]) {
 
   Tracker tracker(dictWords);
   // Deterimine if the input is coming from a pipe
-  // NOTE: Had to look it up as I never had to do it before and useful to have in the future
+  // NOTE: Had to look it up for a specific implemenatation as I never had to do it before
+  //       and useful to have in the future.
   //   - https://stackoverflow.com/a/20330225
   if (!isatty(fileno(stdin))) {
     // Its a pipe.  Read in the text before continuing with checking files

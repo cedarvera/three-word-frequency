@@ -73,13 +73,15 @@ void Tracker::add(std::string _new_word) {
     }
   }
 
-  // If there more than three words then we want to add it to the frequency counts
+  // If there more than three words then we want grab a sequence
+  // to add it to the frequency counts.
   while (threeWords.size() >= 3) {
     std::string seq = threeWords[0] + " " + threeWords[1] + " " + threeWords[2];
     if (freqCounts.find(seq) == freqCounts.end()) {
       freqCounts[seq] = 0;
     }
     ++freqCounts[seq];
+    // We only need to keep track of the latest three words
     threeWords.erase(threeWords.begin());
   }
 }

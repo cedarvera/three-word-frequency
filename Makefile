@@ -1,5 +1,6 @@
 BIN = main
 
+# -g is not necessary but makes finding segementation faults easier with gdb
 CXXFLAGS = -g -Wall -Wextra -pedantic-errors
 
 SRC := $(wildcard src/*.cpp)
@@ -13,16 +14,15 @@ all: build
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# get the files we want
+# Get the files we want.
 texts:
 	@mkdir -p texts
 	@wget -O texts/pg2600.txt https://gutenberg.org/cache/epub/2600/pg2600.txt
 	@wget -O texts/pg2701.txt https://gutenberg.org/cache/epub/2701/pg2701.txt
 
 # NOTE: One off but want to keep a record of where it came from.
-#         Copy dictionary from my computer
-#         not necessary availabe to anyone so let's
-#         add it to the code base.
+#       Copy dictionary from my computer. Dictionary is not necessary available in
+#       the same location so let's add it to the code base.
 .PHONY: dict
 dict:
 	@cat /usr/share/dict/words | awk '{ print tolower($0) }' | sort -u > dict/words
@@ -43,6 +43,7 @@ clean:
 	@$(RM) $(BIN)
 	@$(RM) -r $(OBJ)
 	@$(RM) -r $(TEST_OBJ)
+	@$(RM) test/actual-text.txt
 
 .PHONY: dist-clean
 dist-clean: clean
@@ -53,7 +54,7 @@ dist-clean: clean
 run-unit-test: test
 	@./$(BIN)
 
-# TODO: run it in the cpputest (calling as subprocess), save the output and compare with expected file
+# TODO: If there is more time.  I would run it in the cpputest (calling as subprocess), save the output and compare with expected file.
 .PHONY: run-test-file
 run-test-file: build
 	@./$(BIN) test/test-text.txt > test/actual-text.txt

@@ -4,7 +4,10 @@
 #include <sstream>
 
 /*
- * Remove any spaces
+ * Remove any spaces and lowercase the character.
+ *
+ * There were cases of "empty" lines and this should
+ * remove the blanks until the string is empty.
  */
 std::string Utils::removeSpaces(std::string _word) {
   std::stringstream clean_word;
@@ -22,7 +25,8 @@ std::string Utils::removeSpaces(std::string _word) {
 /*
  * Check if there is hyphen.
  *
- * For so we don't have to check every word if there is hyphen
+ * So we don't have to check every word in a dictionary
+ * if there is hyphen.
  */
 bool Utils::hasHyphen(std::string _word) {
   return std::string::npos != _word.find('-');
@@ -43,7 +47,7 @@ std::vector<std::string> Utils::splitHyphen(std::string _word) {
   // Search until hyphen and when found clear and search again
   std::stringstream potential;
   for (auto& c: _word) {
-    // found a hyphen add the chunk and look again
+    // Found a hyphen add the chunk and look again
     if ('-' == c) {
       splits.push_back(potential.str());
       potential.str("");
@@ -52,8 +56,8 @@ std::vector<std::string> Utils::splitHyphen(std::string _word) {
     potential << c;
   }
   // Add what is left over if not empty
-  // probably could have taken advantage of an empty when the last character is a hyphen
-  // but makes it harder to debug
+  // NOTE: Probably could have taken advantage of an empty when the last character
+  //       is a hyphen but it made it harder to debug.
   std::string lastword = potential.str();
   if (!lastword.empty()) {
     splits.push_back(lastword);
@@ -66,8 +70,9 @@ std::vector<std::string> Utils::splitHyphen(std::string _word) {
  */
 bool Utils::isPunct(char _char) {
   if (ispunct(_char)) { return true; }
-  if (_char == '\"')  { return true; } // The original issue was a unicode character
-				       // probably no longer need
+  if (_char == '\"')  { return true; } // The original issue was an unicode character
+				       // probably no longer need this check as ispunct
+				       // should handle it.
   return false;
 }
 
@@ -108,7 +113,8 @@ std::string Utils::trimPunctuation(std::string _word) {
   return _word;
 }
 
-/* Assumptions:
+/* 
+ * Assumptions:
  *   The word coming in is already delimited by spaces.
  *   The words are generally valid words and don't contain can'''t
  *
@@ -132,7 +138,7 @@ std::string Utils::trimPunctuation(std::string _word) {
  *   any other punctuation can be naively removed.
  */
 std::string Utils::scrubPunctuation(std::string _word) {
-  // trim any punctuation
+  // Trim any punctuation
   _word = Utils::trimPunctuation(_word);
   if (_word.empty()) {
     return "";
@@ -198,7 +204,7 @@ std::string Utils::scrubUTF8 (std::string _word) {
       continue;
     }
 
-    // TODO: Can be done in a for-loop shifting a bit at a time, check, remove
+    // NOTE: Can be done in a for-loop shifting a bit at a time, check, remove
     //       next character if 1.
 
     // If two bytes then collapse to one char
@@ -213,11 +219,13 @@ std::string Utils::scrubUTF8 (std::string _word) {
     if (((_word[i] >> 5) & 1) == 1) {
       _word.erase(i + 1, 1);
     }
+
     // If four bytes then collapse to one char
     //   The first four bits in the code point is 1
     if (((_word[i] >> 4) & 1) == 1) {
       _word.erase(i + 1, 1);
     }
+
     // Replace original location with an non-punctuation
     // but valid single byte character.
     _word[i] = 'U';

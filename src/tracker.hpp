@@ -15,8 +15,8 @@ class Tracker {
     std::string                         maybeNextWord;
 
   public:
-    Tracker          (std::set<std::string> _dictWords);
-    virtual ~Tracker ();
+                Tracker         (std::set<std::string> _dictWords);
+    virtual     ~Tracker        ();
 
     void        add             (std::string _new_word);
     void        clearThreeWords ();
