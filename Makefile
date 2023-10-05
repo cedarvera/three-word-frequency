@@ -49,9 +49,28 @@ dist-clean: clean
 	@$(RM) -r texts
 
 # for ease of use
-.PHONY: run-test
-run-test: test
+.PHONY: run-unit-test
+run-unit-test: test
 	@./$(BIN)
+
+# TODO: run it in the cpputest (calling as subprocess), save the output and compare with expected file
+.PHONY: run-test-file
+run-test-file: build
+	@./$(BIN) test/test-text.txt > test/actual-text.txt
+	@if cmp -s test/expected-text.txt test/actual-text.txt; then \
+	  echo "PASS: Actual output is the same from expected output!"; \
+	 else \
+	  echo "FAIL: Actual output different from expected output!"; \
+	 fi
+
+.PHONY: run-test-stdin
+run-test-stdin: build
+	@cat test/test-text.txt | ./$(BIN) > test/actual-text.txt
+	@if cmp -s test/expected-text.txt test/actual-text.txt; then \
+	  echo "PASS: Actual output is the same from expected output!"; \
+	 else \
+	  echo "FAIL: Actual output different from expected output!"; \
+	 fi
 
 .PHONY: run-stdin
 run-stdin: build
