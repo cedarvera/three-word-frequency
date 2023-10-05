@@ -55,3 +55,13 @@ Everything should be accessible via the Makefile targets.
 - **run-test-stdin**: Build and pipes a smaller test file and compare with known expected text and output the results.
 - **run-test-file**: Builds and reads a smaller test file and compare with known expected text and output the results.
 - **run-unit-test**: Builds and runs the unit test.
+
+### Retrospective
+#### If I had more time
+- Investigate a better way of determining if a hyphen is a punctuation or a continuation.
+- Determining contractions less naively.
+- Add code coverage with ``lcov`` or ``gcov`` to see much of the code is not tested.
+- The ``add`` method on the ``Tracker`` class can be broken up a litter more.
+#### Cool try out
+- Scanning a character at a time instead of relying on the ``>>`` operator when reading from the streams.
+- Figure out how to determine compound word.
