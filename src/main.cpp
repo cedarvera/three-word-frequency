@@ -12,7 +12,16 @@
 //   - It can read text from stdin
 //   - It do both simultaneously
 int main(int _argc, char* _argv[]) {
-  Tracker tracker;
+  // Let's read in the dictionary for the tracker
+  std::set<std::string> dictWords;
+  std::ifstream words;
+  words.open("dict/words");
+  std::string word_input;
+  while (words >> word_input) {
+    dictWords.insert(word_input);
+  }
+
+  Tracker tracker(dictWords);
   // Deterimine if the input is coming from a pipe
   // NOTE: Had to look it up as I never had to do it before and useful to have in the future
   //   - https://stackoverflow.com/a/20330225

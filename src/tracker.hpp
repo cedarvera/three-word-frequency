@@ -4,15 +4,18 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <set>
 
 class Tracker {
   private:
+    std::set<std::string>               dictWords;
+
     std::map<std::string, unsigned int> freqCounts;
     std::vector<std::string>            threeWords;
     std::string                         maybeNextWord;
 
   public:
-    Tracker          ();
+    Tracker          (std::set<std::string> _dictWords);
     virtual ~Tracker ();
 
     void        add             (std::string _new_word);

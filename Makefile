@@ -1,6 +1,6 @@
 BIN = main
 
-CXXFLAGS = -g -Wall
+CXXFLAGS = -g -Wall -Wextra -pedantic-errors
 
 SRC := $(wildcard src/*.cpp)
 OBJ := $(patsubst %.cpp,%.o,$(SRC))

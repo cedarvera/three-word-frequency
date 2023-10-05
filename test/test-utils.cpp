@@ -1,7 +1,7 @@
+#include "../src/utils.hpp"
+
 #include <CppUTest/TestHarness.h>
 #include <CppUTest/TestOutput.h>
-
-#include "../src/utils.hpp"
 
 using namespace Utils;
 

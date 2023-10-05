@@ -76,6 +76,9 @@ bool Utils::isPunct(char _char) {
  * characters.
  */
 std::string Utils::trimPunctuation(std::string _word) {
+  if (_word.empty()) {
+    return "";
+  }
   // If single character punctuation then simple empty
   if (1 == _word.length() && isPunct(_word.front())) {
     return "";
