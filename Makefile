@@ -1,4 +1,4 @@
-BIN = main
+BIN = three-word-frequency
 
 # -g is not necessary but makes finding segementation faults easier with gdb
 CXXFLAGS = -g -Wall -Wextra -pedantic-errors
@@ -34,8 +34,8 @@ setup: texts
 build: setup $(OBJ)
 	@$(CXX) $(CXXFLAGS) $(OBJ) -o $(BIN)
 
-.PHONY: test
-test: $(TEST_OBJ)
+.PHONY: build-test
+build-test: $(TEST_OBJ)
 	@$(CXX) $(CXXFLAGS) -g $(TEST_OBJ) -o $(BIN) -lCppUTest
 
 .PHONY: clean
@@ -51,7 +51,7 @@ dist-clean: clean
 
 # for ease of use
 .PHONY: run-unit-test
-run-unit-test: test
+run-unit-test: build-test
 	@./$(BIN)
 
 # TODO: If there is more time.  I would run it in the cpputest (calling as subprocess), save the output and compare with expected file.

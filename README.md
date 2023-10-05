@@ -23,3 +23,35 @@ For example, if the code is run on War And Peace (https://gutenburg.org/cache/ep
 
 ## Test Requirements
 - Have automated tests
+
+# Usage
+Implemented in Gentoo.  It should be able to be compiled and run on most Linux systems.
+
+## Packages Used
+    make
+    cpputest
+    cmp
+    wget
+    awk
+    sort
+
+In Debian/Ubuntu systems, you install the packages ``build-essential``, ``cpputest``, and ``wget``.
+    apt install build-essential cpputest wget
+
+## Usage
+Everything should be accessible via the Makefile targets.
+
+### Makefile Targets
+#### Cleaning Targets
+- **clean**: Remove the binary, object files and other generated files from running the test.
+- **dist-clean**: Runs clean and removes the downloaded text from Gutenberg.org
+#### Build and Setup Targets
+- **setup**: Download *War And Peace* and *Moby Dick* from Gutenberg.org
+- **build**: Compiles the main binary ``three-word-frequency``.
+- **build-test**: Compiles the unit tests.  It is also named ``three-word-frequency``.
+#### Run Targets
+- **run-stdin**: Build and pipes *War And Peace* into ``three-word-frequency`` and output the top 100 most frequent sequences.
+- **run-file**: Build and reads *War And Peace* and *Moby Dick* file with ``three-word-frequency`` and output the top 100 most frequent sequences.
+- **run-test-stdin**: Build and pipes a smaller test file and compare with known expected text and output the results.
+- **run-test-file**: Builds and reads a smaller test file and compare with known expected text and output the results.
+- **run-unit-test**: Builds and runs the unit test.
